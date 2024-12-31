@@ -1,0 +1,122 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/core/array_list.o",
+      "src/core/array_list.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/src/core/array_list.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/core/array_list.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/core/core.o",
+      "src/core/core.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/src/core/core.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/core/core.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/gpu/gl_renderer.o",
+      "src/gpu/gl_renderer.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/src/gpu/gl_renderer.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/gpu/gl_renderer.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/gpu/gpu.o",
+      "src/gpu/gpu.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/src/gpu/gpu.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/gpu/gpu.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/window/window.o",
+      "src/window/window.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/src/window/window.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/window/window.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-std=c99",
+      "-g",
+      "-I./src",
+      "-I./include",
+      "-I./extern/glfw/3.4/include",
+      "-I./extern/glad/include",
+      "-c",
+      "-o",
+      "build/glad/src/glad.o",
+      "extern/glad/src/glad.c"
+    ],
+    "directory": "/Users/kenmasters/Code/projects/cengine",
+    "file": "/Users/kenmasters/Code/projects/cengine/extern/glad/src/glad.c",
+    "output": "/Users/kenmasters/Code/projects/cengine/build/glad/src/glad.o"
+  }
+]

@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "gpu.h": "c",
+        "cengine.h": "c",
+        "core.h": "c",
+        "window.h": "c",
+        "array_list.h": "c",
+        "gl_renderer.h": "c",
+        "__availability": "c",
+        "test.h": "c",
+        "stdbool.h": "c",
+        "glfw3.h": "c",
+        "glad.h": "c"
+    }
+}
