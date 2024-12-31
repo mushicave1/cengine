@@ -9,6 +9,7 @@
 #include <core/core.h>
 #include <core/array_list.h>
 #include <window/window.h>
+#include <image_loader/image_loader.h>
 
 
 #endif /** CENGINE_H */

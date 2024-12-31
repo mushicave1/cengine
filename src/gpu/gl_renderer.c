@@ -72,7 +72,7 @@ CENGINE_GPU_VertexBuffer CENGINE_GPU_CreateVertexBuffer(void *data, size_t byte_
     glGenBuffers(1, &buffer->vbo);
     glBindBuffer(GL_ARRAY_BUFFER, buffer->vbo);
     glBufferData(GL_ARRAY_BUFFER, byte_size, data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     return (CENGINE_GPU_VertexBuffer){.idx = counter};
 }
@@ -92,7 +92,7 @@ CENGINE_GPU_IndexBuffer CENGINE_GPU_CreateIndexBuffer(void *data, size_t byte_si
     glGenBuffers(1, &buffer->ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer->ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, byte_size, data, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_NONE);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     return (CENGINE_GPU_IndexBuffer){.idx = counter};
 }
@@ -128,9 +128,9 @@ CENGINE_GPU_VertexInput CENGINE_GPU_CreateVertexInput(CENGINE_GPU_VertexBuffer v
         glEnableVertexAttribArray(i);
     }    
 
-    glBindVertexArray(GL_NONE);
-    glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_NONE);
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     return (CENGINE_GPU_VertexInput){.idx = counter};
 }
@@ -199,8 +199,12 @@ CENGINE_GPU_Texture CENGINE_GPU_CreateTexture(const unsigned char *pixels, size_
     GLTexture* texture = &s_ctx.textures[counter];
     glGenTextures(1, &texture->tex);
     glBindTexture(GL_TEXTURE_2D, texture->tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, CENGINE_GPU_RENDERER_TextureInternalFormat(internal_format), width, height, 0, CENGINE_GPU_RENDERER_TextureFormat(format), GL_UNSIGNED_BYTE, (void*)pixels);
-    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, CENGINE_GPU_RENDERER_TextureFormat(format), width, height, 0, CENGINE_GPU_RENDERER_TextureInternalFormat(internal_format), GL_UNSIGNED_BYTE, (void*)pixels);
+    glBindTexture(GL_TEXTURE_2D, 0);
     
     return (CENGINE_GPU_Texture){.idx = counter};
 }
@@ -212,15 +216,18 @@ void CENGINE_GPU_DestroyTexture(CENGINE_GPU_Texture *handle)
     handle->idx = CENGINE_GPU_NULL_INDEX;
 }
 
-void CENGINE_GPU_DrawIndexed(size_t count, CENGINE_GPU_VertexInput vertex_input, CENGINE_GPU_Program program) 
+void CENGINE_GPU_DrawIndexed(size_t count, CENGINE_GPU_VertexInput vertex_input, CENGINE_GPU_Program program, CENGINE_GPU_Texture tex) 
 {
     GLProgram *p = &s_ctx.programs[program.idx];
     GLVertexInput *input = &s_ctx.vertex_inputs[vertex_input.idx];
+    GLTexture *texture = &s_ctx.textures[tex.idx];
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.1, 0.1, 0.12, 1.0);
     
     glBindVertexArray(input->vao);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture->tex);
     glUseProgram(p->program);
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
 

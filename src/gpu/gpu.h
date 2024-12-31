@@ -53,25 +53,6 @@ typedef struct {
     uint32_t len;
 } CENGINE_GPU_BufferView;
 
-typedef struct {
-    CENGINE_GPU_VertexBuffer (*createVertexBuffer)(void *data, size_t byte_size);
-    void (*destroyVertexBuffer)(CENGINE_GPU_VertexBuffer *handle);
-
-    CENGINE_GPU_IndexBuffer (*createIndexBuffer)(void *data, size_t byte_size);
-    void (*destroyIndexBuffer)(CENGINE_GPU_IndexBuffer *handle);
-
-    CENGINE_GPU_VertexInput (*createVertexInput)(CENGINE_GPU_VertexBuffer vertex_buffer, CENGINE_GPU_BufferView buffer_view, CENGINE_GPU_IndexBuffer index_buffer);
-    void (*destroyVertexInput)(CENGINE_GPU_VertexInput *handle);
-
-    CENGINE_GPU_Program (*createProgram)(const char *vs_code, const char *fs_code);
-    void (*destroyProgram)(CENGINE_GPU_Program *handle);
-
-    CENGINE_GPU_Texture (*createTexture)(const unsigned char *pixels, size_t width, size_t height, CENGINE_GPU_TextureFormat format, CENGINE_GPU_TextureInternalFormat internal_format, size_t mip_map_count);
-    void (*destroyTexture)(CENGINE_GPU_Texture *handle);
-
-    void (*drawIndexed)(size_t count, CENGINE_GPU_VertexInput vertex_input, CENGINE_GPU_Program program);
-} CENGINE_Gpu;
-
 
 CENGINE_GPU_VertexBuffer CENGINE_GPU_CreateVertexBuffer(void *data, size_t byte_size);
 void CENGINE_GPU_DestroyVertexBuffer(CENGINE_GPU_VertexBuffer *handle);
@@ -91,7 +72,7 @@ void CENGINE_GPU_DestroyTexture(CENGINE_GPU_Texture *handle);
 /*
 * Draw Commands
 */
-void CENGINE_GPU_DrawIndexed(size_t count, CENGINE_GPU_VertexInput vertex_input, CENGINE_GPU_Program program);
+void CENGINE_GPU_DrawIndexed(size_t count, CENGINE_GPU_VertexInput vertex_input, CENGINE_GPU_Program program, CENGINE_GPU_Texture tex);
 
 
 #endif /** CENGINE_SRC_GPU_GPU_H */

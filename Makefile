@@ -1,7 +1,7 @@
 # Compiler and flags
 CC = cc
 BUILD_DIR = build
-CFLAGS = -Wall -Wextra -std=c99 -g
+CFLAGS = -Wall -Wextra -std=c99 -g -O1 -fsanitize=address 
 
 # User Args
 GPU_BACKEND = opengl
@@ -30,6 +30,11 @@ SRC_WINDOW_DIR = $(SRC_DIR)/window
 SRC_WINDOW_FILES = $(wildcard $(SRC_WINDOW_DIR)/*.c)
 SRC_WINDOW_OBJ = $(patsubst $(SRC_DIR)/%, $(BUILD_DIR)/%, $(SRC_WINDOW_FILES:.c=.o))
 
+SRC_IMAGE_LOADER_DIR = $(SRC_DIR)/image_loader
+SRC_IMAGE_LOADER_FILES = $(wildcard $(SRC_IMAGE_LOADER_DIR)/*.c)
+SRC_IMAGE_LOADER_OBJ = $(patsubst $(SRC_DIR)/%, $(BUILD_DIR)/%, $(SRC_IMAGE_LOADER_FILES:.c=.o))
+
+
 # CENGINE Internal Include
 INCLUDE_DIR = include
 
@@ -44,8 +49,10 @@ EXTERNAL_GLFW_DIR = $(EXTERNAL_DIR)/glfw/3.4
 EXTERNAL_GLFW_INCLUDE = $(EXTERNAL_GLFW_DIR)/include
 EXTERNAL_GLFW_LIB = $(EXTERNAL_GLFW_DIR)/lib
 
+EXTERNAL_STB_IMAGE_DIR = $(EXTERNAL_DIR)
+
 # CENGINE Flags
-FLAGS = -I$(INCLUDE_DIR) -I$(SRC_DIR) -I$(EXTERNAL_GLFW_INCLUDE) -I$(EXTERNAL_GLAD_DIR)/include
+FLAGS = -I$(INCLUDE_DIR) -I$(SRC_DIR) -I$(EXTERNAL_GLFW_INCLUDE) -I$(EXTERNAL_GLAD_DIR)/include -I$(EXTERNAL_STB_IMAGE_DIR)
 
 # CENGINE Library
 LIB = $(BUILD_DIR)/libcengine.a
@@ -75,7 +82,7 @@ examples-basic: $(EXAMPLES_BASIC_EXE)
 	./$<
 
 
-$(LIB): $(SRC_CORE_OBJ) $(SRC_GPU_OBJ) $(SRC_WINDOW_OBJ) $(EXTERNAL_GLAD_OBJ)
+$(LIB): $(SRC_CORE_OBJ) $(SRC_GPU_OBJ) $(SRC_WINDOW_OBJ) $(SRC_IMAGE_LOADER_OBJ) $(EXTERNAL_GLAD_OBJ)
 	@echo "Linking cengine objects into static library $@..."
 	ar rcs $@ $^
 
@@ -89,6 +96,9 @@ $(BUILD_DIR)/gpu:
 	mkdir -p $@
 
 $(BUILD_DIR)/window:
+	mkdir -p $@
+
+$(BUILD_DIR)/image_loader:
 	mkdir -p $@
 
 $(BUILD_DIR)/test:
@@ -109,6 +119,10 @@ $(BUILD_DIR)/gpu/%.o: $(SRC_GPU_DIR)/%.c| $(BUILD_DIR) $(BUILD_DIR)/gpu
 	$(CC) $(CFLAGS) $(FLAGS) -c $< -o $@
 
 $(BUILD_DIR)/window/%.o: $(SRC_WINDOW_DIR)/%.c| $(BUILD_DIR) $(BUILD_DIR)/window
+	@echo "Building cengine obj $@ from source $<"
+	$(CC) $(CFLAGS) $(FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/image_loader/%.o: $(SRC_IMAGE_LOADER_DIR)/%.c| $(BUILD_DIR) $(BUILD_DIR)/image_loader
 	@echo "Building cengine obj $@ from source $<"
 	$(CC) $(CFLAGS) $(FLAGS) -c $< -o $@
 

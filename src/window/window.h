@@ -8,7 +8,7 @@
 
 typedef struct CENGINE_Window *CENGINE_Window;
 
-void CENGINE_WINDOW_Init(size_t pixel_width, size_t pixel_height, const char *name, CENGINE_Window window);
+void CENGINE_WINDOW_Init(size_t pixel_width, size_t pixel_height, const char *name, CENGINE_Window *window);
 
 bool CENGINE_WINDOW_IsRunning(CENGINE_Window window);
 
